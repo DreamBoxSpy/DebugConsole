@@ -11,7 +11,10 @@ namespace DebugConsole.Commands.ChiuYi
         [ConsoleMethod("gotolvl", "前往编号对应关卡，关卡编号查看:gotolvl -help", "用法: gotolvl [关卡编号]")]
         public static void Gotolevel(TextWriter writer, string message = "")
         {
-            getlvlid(writer);
+            if (allLevels.Count == 0)
+            {
+                getlvlid(writer);
+            }
 
             if (message == "-help")
             {
