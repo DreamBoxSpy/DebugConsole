@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DebugConsole
+namespace DebugConsole.Commands
 {
     internal static class BuiltinCommands
     {
