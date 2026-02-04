@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/解决方案项/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="DebugConsole/DebugConsole.csproj" Id="a6045ec9-bf07-47dd-88e8-3cd76cf907ed" />
+</Solution>
