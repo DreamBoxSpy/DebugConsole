@@ -321,13 +321,12 @@ namespace IngameDebugConsole
             }
 
             // Fetch the parameters of the class
-            ParameterInfo[] parameters = method.GetParameters();
-            if (parameters == null)
-                parameters = [];
+            ParameterInfo[] parameters = [.. method.GetParameters().Skip(1)];
+            parameters ??= [];
 
             // Store the parameter types in an array
-            Type[] parameterTypes = new Type[parameters.Length - 1];
-            for (int i = 1; i < parameters.Length; i++)
+            Type[] parameterTypes = new Type[parameters.Length];
+            for (int i = 0; i < parameters.Length; i++)
             {
                 if (parameters[i].ParameterType.IsByRef)
                 {
@@ -337,7 +336,7 @@ namespace IngameDebugConsole
 
                 Type parameterType = parameters[i].ParameterType;
                 if (parseFunctions.ContainsKey(parameterType) || parameterType.IsEnum || IsSupportedArrayType(parameterType))
-                    parameterTypes[i - 1] = parameterType;
+                    parameterTypes[i] = parameterType;
                 else
                 {
                     ModMain.Log.Error(string.Concat("Parameter ", parameters[i].Name, "'s Type ", parameterType, " isn't supported"));
@@ -398,13 +397,17 @@ namespace IngameDebugConsole
 
             if (parameterTypes.Length > 0)
             {
-                methodSignature.Append(" ");
+                methodSignature.Append(' ');
 
                 for (int i = 0; i < parameterTypes.Length; i++)
                 {
                     int parameterSignatureStartIndex = methodSignature.Length;
 
-                    methodSignature.Append("[").Append(GetTypeReadableName(parameterTypes[i])).Append(" ").Append((parameterNames != null && i < parameterNames.Length && !string.IsNullOrEmpty(parameterNames[i])) ? parameterNames[i] : parameters[i].Name).Append("]");
+                    methodSignature.Append('[').Append(
+                        GetTypeReadableName(parameterTypes[i]))
+                        .Append(' ')
+                        .Append((parameterNames != null && i < parameterNames.Length && !string.IsNullOrEmpty(parameterNames[i])) ? parameterNames[i] : parameters[i].Name)
+                        .Append(']');
 
                     if (i < parameterTypes.Length - 1)
                         methodSignature.Append(' ');

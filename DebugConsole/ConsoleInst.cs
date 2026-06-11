@@ -83,10 +83,16 @@ namespace DebugConsole
 
         private void HandleCommand(string str)
         {
-            ModCore.Modules.Game.SynchronizationContext.Send(_ =>
+            try
             {
-                DebugLogConsole.ExecuteCommand(str, Writter);
-            }, null);
+                ModCore.Modules.Game.SynchronizationContext.Send(_ =>
+                {
+                    DebugLogConsole.ExecuteCommand(str, Writter);
+                }, null);
+            }catch(Exception ex)
+            {
+                Writter.WriteLine("<red>" + ex.ToString() + "</red>");
+            }
         }
 
         private void WorkerThread()

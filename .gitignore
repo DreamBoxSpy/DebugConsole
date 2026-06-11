@@ -417,3 +417,4 @@ FodyWeavers.xsd
 *.msm
 *.msp
 /DebugConsole/Properties/launchSettings.json
+/DebugConsole.Commands/Properties/launchSettings.json
